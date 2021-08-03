@@ -12,9 +12,6 @@ class Player {
   }
 
   // NOTE Prezime igraca u formatu za output
-  letme() {
-    console.log("yey");
-  }
   getLastName() {
     return this.lastName[0].toUpperCase() + this.lastName.slice(1).toLowerCase();
   }
