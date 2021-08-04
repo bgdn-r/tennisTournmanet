@@ -43,7 +43,8 @@ const setResults = function (arr) {
 };
 
 // NOTE Store valid players into array
-const storePlayers = function (tennisPlayers, tempTennisPlayerData) {
+const storePlayers = function (tennisPlayers, tempTennisPlayer) {
+  const tempTennisPlayerData = tempTennisPlayer.split(",");
   tennisPlayers.push(
     new Player(
       tempTennisPlayerData[0],

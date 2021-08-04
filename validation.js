@@ -48,7 +48,8 @@ const validateCountryFormat = function (arr) {
   }
   return true;
 };
-const inputValidation = function (tennisPlayers, tempTennisPlayer, tempTennisPlayerData) {
+const inputValidation = function (tennisPlayers, tempTennisPlayer) {
+  const tempTennisPlayerData = tempTennisPlayer.split(",");
   if (
     !validateArrLength(tempTennisPlayer) ||
     !validateString(tempTennisPlayer) ||

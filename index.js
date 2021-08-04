@@ -9,11 +9,9 @@ const main = () => {
   let N = 0;
   const tennisPlayers = [];
 
-  // NOTE Provera da li je aplikacija pozvana sa dodatnim argumentom (teniseri.csv u ovom slucaju) ili se unos vrsi manuelno
   if (process.argv.length < 3) {
     N = readlineSync.question("Unesite broj tenisera (N):");
 
-    // NOTE Provera da li je unet broj tenisera 'N' validan
     if (!validNumOfPlayers.includes(+N)) {
       console.error(`Unesite validan broj igraca: ${validNumOfPlayers}.`);
       return main();
@@ -23,26 +21,21 @@ const main = () => {
       const tempTennisPlayer = readlineSync.question(
         `Player: ${i + 1}. Unesite tenisera u obliku [ime],[prezime],[drzava],[ranking]:`
       );
-      const tempTennisPlayerData = tempTennisPlayer.split(",");
 
-      if (!inputValidation(tennisPlayers, tempTennisPlayer, tempTennisPlayerData)) {
+      if (!inputValidation(tennisPlayers, tempTennisPlayer)) {
         i--;
-      } else storePlayers(tennisPlayers, tempTennisPlayerData);
+      } else storePlayers(tennisPlayers, tempTennisPlayer);
     }
   } else {
-    // NOTE Ako je 3 argumenta proslednjeno, citamo fajl ciji naziv je prosledjen kao dodatni argument pri pokretanju aplikacije
     try {
       const fileContents = fs.readFileSync(process.argv[2]).toString();
       const csvPlayerData = fileContents.trim().split("\n");
 
       csvPlayerData.forEach((tempTennisPlayer) => {
-        const tempTennisPlayerData = tempTennisPlayer.split(",");
-
-        if (!inputValidation(tennisPlayers, tempTennisPlayer, tempTennisPlayerData)) {
+        if (!inputValidation(tennisPlayers, tempTennisPlayer)) {
           console.error(`Neispravan format unosa: ${tempTennisPlayer}`);
-        } else storePlayers(tennisPlayers, tempTennisPlayerData);
+        } else storePlayers(tennisPlayers, tempTennisPlayer);
       });
-      // NOTE 'N' u ovom slucaju definise broj tenisera u validnom formatu
       N = tennisPlayers.length;
       if (!validNumOfPlayers.includes(+N)) {
         console.error(`Ukupan broj validnih igraca u csv fajlu je: ${N}, a dozvoljeno je ${validNumOfPlayers} igraca.`);
