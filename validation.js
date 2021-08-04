@@ -43,7 +43,7 @@ const validateIfRankIsUnique = function (arr, playerData) {
 const validateCountryFormat = function (arr) {
   if (!arr[2]) return false;
   if (arr[2].length !== 3 && arr[2].length !== 2) {
-    console.error(`Unesite skraceni naziv zemlje u alpha-3 formatu. Primer: 'USA'.`);
+    console.error(`Unesite skraceni naziv zemlje u alpha-3 ili aplha-2 formatu. Primer: 'USA', 'AU'.`);
     return false;
   }
   return true;
