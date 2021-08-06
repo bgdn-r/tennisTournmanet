@@ -5,6 +5,7 @@ const { Tournament } = require("./tournament.js");
 const { inputValidation } = require("./validation.js");
 const { storePlayers } = require("./helpers.js");
 
+const { Prelims } = require("./prelims.js");
 const main = () => {
   let N = 0;
   const tennisPlayers = [];
@@ -44,17 +45,19 @@ const main = () => {
       });
       // NOTE 'N' u ovom slucaju definise broj tenisera u validnom formatu
       N = tennisPlayers.length;
-      if (!validNumOfPlayers.includes(+N)) {
-        console.error(`Ukupan broj validnih igraca u csv fajlu je: ${N}, a dozvoljeno je ${validNumOfPlayers} igraca.`);
-        return;
-      }
+      // if (!validNumOfPlayers.includes(+N)) {
+      //   console.error(`Ukupan broj validnih igraca u csv fajlu je: ${N}, a dozvoljeno je ${validNumOfPlayers} igraca.`);
+      //   return;
+      // }
     } catch (err) {
       console.error(err.message);
     }
   }
 
+  const prelims = new Prelims(N, tennisPlayers, validNumOfPlayers);
+  prelims.logger();
   const tournament = new Tournament(N, tennisPlayers);
-  tournament.start();
+  // tournament.start();
 };
 
 main();
