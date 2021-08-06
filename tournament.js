@@ -66,11 +66,15 @@ class Tournament {
 
   #matchUpRoundOne() {
     const pairs = [];
-    const odds = this.players.filter((player) => player.ranking % 2 !== 0);
-    const evens = this.players.filter((player) => player.ranking % 2 === 0);
+    this.players.sort((a, b) => a.ranking - b.ranking);
 
-    pairs.push(...this.#generatePair(odds));
-    pairs.push(...this.#generatePair(evens));
+    const firstHalfOfPlayers = this.players.splice(0, this.players.length / 2);
+    const secondHalfOfPlayers = this.players.splice(this.players.length / 2);
+    while (secondHalfOfPlayers.length > 0) {
+      const pair = [];
+      pair.push(firstHalfOfPlayers.splice(0, 1)[0], secondHalfOfPlayers.splice(0, 1)[0]);
+      pairs.push(pair);
+    }
     return pairs;
   }
 
