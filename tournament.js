@@ -68,8 +68,9 @@ class Tournament {
     const pairs = [];
     this.players.sort((a, b) => a.ranking - b.ranking);
 
-    const firstHalfOfPlayers = this.players.splice(0, this.players.length / 2);
-    const secondHalfOfPlayers = this.players.splice(this.players.length / 2);
+    const firstHalfOfPlayers = this.players.slice(0, this.players.length / 2);
+    const secondHalfOfPlayers = this.players.slice(this.players.length / 2);
+
     while (secondHalfOfPlayers.length > 0) {
       const pair = [];
       pair.push(firstHalfOfPlayers.splice(0, 1)[0], secondHalfOfPlayers.splice(0, 1)[0]);
