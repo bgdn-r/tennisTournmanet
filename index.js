@@ -13,14 +13,9 @@ const main = () => {
   if (process.argv.length < 3) {
     N = readlineSync.question("Unesite broj tenisera (N):");
 
-<<<<<<< HEAD
     // NOTE Provera da li je unet broj tenisera 'N' validan
     if (N < 4 || N > 64) {
       console.error(`Unesite validan broj igraca: [4...64].`);
-=======
-    if (!validNumOfPlayers.includes(+N)) {
-      console.error(`Unesite validan broj igraca: ${validNumOfPlayers}.`);
->>>>>>> main
       return main();
     }
 
