@@ -6,7 +6,7 @@ const { inputValidation } = require("./validation.js");
 const { storePlayers } = require("./helpers.js");
 
 const { Prelims } = require("./prelims.js");
-const main = async () => {
+const main = () => {
   let N = 0;
   const tennisPlayers = [];
 
@@ -15,8 +15,8 @@ const main = async () => {
     N = readlineSync.question("Unesite broj tenisera (N):");
 
     // NOTE Provera da li je unet broj tenisera 'N' validan
-    if (!validNumOfPlayers.includes(+N)) {
-      console.error(`Unesite validan broj igraca: ${validNumOfPlayers}.`);
+    if (N < 4 || N > 64) {
+      console.error(`Unesite validan broj igraca: [4...64].`);
       return main();
     }
 
@@ -45,26 +45,34 @@ const main = async () => {
       });
       // NOTE 'N' u ovom slucaju definise broj tenisera u validnom formatu
       N = tennisPlayers.length;
-      // if (!validNumOfPlayers.includes(+N)) {
-      //   console.error(`Ukupan broj validnih igraca u csv fajlu je: ${N}, a dozvoljeno je ${validNumOfPlayers} igraca.`);
-      //   return;
-      // }
+      if (N < 4 || N > 64) {
+        console.error(`Unesite validan broj igraca: [4...64].`);
+        return main();
+      }
+      //NOTE ako unet validan broj ne spada u brojeve koji su u validNumArray-u pokrecu se preliminarne runde
       if (!validNumOfPlayers.includes(+N)) {
-        const prelims = await new Prelims(N, tennisPlayers, validNumOfPlayers);
+        const prelims = new Prelims(N, tennisPlayers, validNumOfPlayers);
 
-        const tournament = await new Tournament(N, prelims.getPlayers());
+        const tournament = new Tournament(N, prelims.start());
         return tournament.start();
       } else {
-        const tournament = await new Tournament(N, tennisPlayers);
+        const tournament = new Tournament(N, tennisPlayers);
         return tournament.start();
       }
     } catch (err) {
       console.error(err.message);
     }
   }
+  //NOTE ako unet validan broj ne spada u brojeve koji su u validNumArray-u pokrecu se preliminarne runde
+  if (!validNumOfPlayers.includes(+N)) {
+    const prelims = new Prelims(N, tennisPlayers, validNumOfPlayers);
 
-  // const tournament = new Tournament(N, tennisPlayers);
-  // tournament.start();
+    const tournament = new Tournament(N, prelims.start());
+    return tournament.start();
+  } else {
+    const tournament = new Tournament(N, tennisPlayers);
+    return tournament.start();
+  }
 };
 
 main();

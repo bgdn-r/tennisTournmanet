@@ -1,5 +1,4 @@
 const { Tournament } = require("./tournament");
-const { randomNum, setResults } = require("./helpers.js");
 const { validNumOfPlayers } = require("./config");
 
 class Prelims extends Tournament {
@@ -13,7 +12,7 @@ class Prelims extends Tournament {
     this.players = playersArr;
   }
 
-  getPlayers() {
+  start() {
     //NOTE Sort the numbers so we can get the closest num of valid players
     validNumOfPlayers.sort((a, b) => b - a);
 
@@ -25,8 +24,7 @@ class Prelims extends Tournament {
 
     //NOTE Players for prelims
     this.prelimPlayers.push(...this.players.splice(validPlayers - 1));
-    // console.log(this.players.push(...this.funkcija()));
-    this.players.push(...this.funkcija());
+    this.players.push(...this.prelimination());
     return this.players;
   }
 
@@ -61,8 +59,8 @@ class Prelims extends Tournament {
   }
   /////////////////////
 
-  funkcija() {
-    // 4) ako ima samo dva pobednika izvuci jednog i vratiti ga
+  prelimination() {
+    // 4) if there is only 2 winners get one winner and return it
     if (this.prelimPlayers.length === 2) {
       this.finals.push(this.prelimPlayers);
       this.winner.push(this.getWinners(this.finals)[0]);
@@ -70,17 +68,17 @@ class Prelims extends Tournament {
       return this.winner;
     }
     if (this.prelimPlayers.length % 2 === 0) {
-      // 1) napraviti meceve od po 2
+      // 1) generate matches
       const pairs = this.generatePair(this.prelimPlayers);
-      // 2) izvuci pobednike
+      // 2) get winners
       this.prelimPlayers = [];
       this.prelimPlayers.push(...this.getWinners(pairs));
-      // 3) pozvati funkciju ponovo sa pobednicima
-      return this.funkcija();
+      // 3) recurse
+      return this.prelimination();
     } else {
-      // 1) izvuci igraca sa najvecim rankom = byePasser
+      // 1) get player with highest ranking and store him as a byePasser
       this.byePasser = this.prelimPlayers.splice(0, 1);
-      // 2) upariti preostale igrace u meceve
+      // 2) generatePairs for rest
       if (this.prelimPlayers.length === 2) {
         this.finals.push(this.prelimPlayers);
         const winner = this.getWinners(this.finals)[0];
@@ -90,20 +88,20 @@ class Prelims extends Tournament {
         console.log(this.#declareWinner(...this.winner));
         return this.winner;
       } else {
-        // 3) izvuci pobednike
+        // 3) get winners
         const pairs = this.generatePair(this.prelimPlayers);
         this.prelimPlayers = [];
         this.prelimPlayers.push(this.getWinners(pairs));
       }
-      // 4) ako je paran broj pobednika pozvati funkciju ponovo
+      // 4) if even number then recurse
       if (this.prelimPlayers.length % 2 === 0) {
-        this.funkcija();
+        this.prelimination();
       } else {
-        // 5) ako je ne paran broj pobednika ubaciti byePassera i pozvati funkciju ponovo
+        // 5) if odd number add byePasser and then recurse
         this.prelimPlayers[0].push(...this.byePasser);
 
         this.prelimPlayers = this.prelimPlayers.flat();
-        return this.funkcija();
+        return this.prelimination();
       }
     }
   }
