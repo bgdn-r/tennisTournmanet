@@ -54,4 +54,5 @@ const storePlayers = function (tennisPlayers, tempTennisPlayer) {
     )
   );
 };
+
 module.exports = { setResults, randomNum, storePlayers };

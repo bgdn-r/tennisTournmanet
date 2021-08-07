@@ -61,4 +61,12 @@ const inputValidation = function (tennisPlayers, tempTennisPlayer) {
   } else return true;
 };
 
-module.exports = { inputValidation };
+const check = (N, main) => {
+  // NOTE Provera da li je unet broj tenisera 'N' validan
+  if (N < 4 || N > 64) {
+    console.error(`Unesite validan broj igraca: [4...64].`);
+    return main();
+  }
+};
+
+module.exports = { inputValidation, check };
