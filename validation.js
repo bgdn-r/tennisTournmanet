@@ -63,7 +63,7 @@ const inputValidation = function (tennisPlayers, tempTennisPlayer) {
 
 const check = (N, main) => {
   // NOTE Provera da li je unet broj tenisera 'N' validan
-  if (N < 4 || N > 64) {
+  if (N < 4 || N > 64 || !Number(+N)) {
     console.error(`Unesite validan broj igraca: [4...64].`);
     return main();
   }
