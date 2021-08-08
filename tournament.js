@@ -8,7 +8,7 @@ class Tournament {
     this.players = playersArr;
   }
 
-  #getRound(arr) {
+  getRound(arr) {
     this.#counter++;
     if (!arr.length) return;
     if (arr.length === 1) return `Round: ${this.#counter} / Finals: \n`;
@@ -16,8 +16,8 @@ class Tournament {
     if (arr.length > 2) return `Round: ${this.#counter} \n`;
   }
 
-  #renderOutput(winners, losers, pairs) {
-    console.log(`\n${this.#getRound(pairs)}`);
+  renderOutput(winners, losers, pairs) {
+    console.log(`\n${this.getRound(pairs)}`);
     for (let i = 0; i < winners.length; i++) {
       const winner = `${winners[i].getFirstName()}. ${winners[i].getLastName()}(${winners[i].country}, ${
         winners[i].ranking
@@ -44,7 +44,7 @@ class Tournament {
       pair[0].sets < pair[1].sets ? losers.push(pair[0]) : losers.push(pair[1]);
     });
 
-    this.#renderOutput(winners, losers, pairs);
+    this.renderOutput(winners, losers, pairs);
     return winners;
   }
 

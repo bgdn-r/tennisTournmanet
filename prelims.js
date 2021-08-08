@@ -28,7 +28,7 @@ class Prelims extends Tournament {
     return this.players;
   }
 
-  #getRound(arr) {
+  getRound(arr) {
     this.#counter++;
     if (!arr.length) return;
     return `Prelimination round: ${this.#counter} \n`;
@@ -41,7 +41,7 @@ class Prelims extends Tournament {
   }
 
   renderOutput(winners, losers, pairs) {
-    console.log(`\n${this.#getRound(pairs)}`);
+    console.log(`\n${this.getRound(pairs)}`);
     for (let i = 0; i < winners.length; i++) {
       const winner = `${winners[i].getFirstName()}. ${winners[i].getLastName()}(${winners[i].country}, ${
         winners[i].ranking
